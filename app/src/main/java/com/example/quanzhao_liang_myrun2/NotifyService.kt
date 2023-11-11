@@ -1,20 +1,28 @@
 package com.example.quanzhao_liang_myrun2
 
-import android.app.*
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.app.PendingIntent
+import android.app.Service
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
+import android.hardware.Sensor
+import android.hardware.SensorEvent
+import android.hardware.SensorEventListener
 import android.os.Build
 import android.os.IBinder
 import androidx.core.app.NotificationCompat
 
-class NotifyService: Service() {
+class NotifyService: Service(), SensorEventListener{
     private val channelId = "notification channel"
     private val PENDINGINTENT_REQUEST_CODE = 0
     private val NOTIFY_ID = 11
     private lateinit var notificationManager: NotificationManager
     private lateinit var myBroadcastReceiver: MyBroadcastReceiver
+
+    private val mFeatLen = Globals.ACCELEROMETER_BLOCK_CAPACITY + 2
     companion object{
         val STOP_SERVICE_ACTION = "stop service action"
     }
@@ -41,7 +49,7 @@ class NotifyService: Service() {
 
     fun showNotification(){
         val mapIntent = Intent(this, MapDisplayActivity::class.java)
-        mapIntent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+
         val pendingIntent = PendingIntent.getActivity(
             this, PENDINGINTENT_REQUEST_CODE,
             mapIntent, PendingIntent.FLAG_IMMUTABLE
@@ -72,6 +80,14 @@ class NotifyService: Service() {
     }
     override fun onBind(intent: Intent?): IBinder? {
         return null
+    }
+
+    override fun onSensorChanged(event: SensorEvent?) {
+        TODO("Not yet implemented")
+    }
+
+    override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {
+        TODO("Not yet implemented")
     }
 
 }

@@ -1,6 +1,7 @@
 package com.example.quanzhao_liang_myrun2
 
 import android.Manifest
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Color
 import android.location.Location
@@ -43,10 +44,15 @@ class MapDisplayActivity : AppCompatActivity(), OnMapReadyCallback, LocationList
 
         mapSaveBtn = findViewById(R.id.mapSaveBtn)
         mapCancelBtn = findViewById(R.id.mapCancelBtn)
+
+        val intent = Intent()
+        intent.action = NotifyService.STOP_SERVICE_ACTION
         mapSaveBtn.setOnClickListener{
+            sendBroadcast(intent)
             finish()
         }
         mapCancelBtn.setOnClickListener{
+            sendBroadcast(intent)
             finish()
         }
     }

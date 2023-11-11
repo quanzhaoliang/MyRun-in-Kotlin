@@ -62,4 +62,7 @@ dependencies {
 
     //Google Map Service
     implementation("com.google.android.gms:play-services-maps:18.2.0")
+
+    implementation(files("libs/weka.jar"))
+
 }
