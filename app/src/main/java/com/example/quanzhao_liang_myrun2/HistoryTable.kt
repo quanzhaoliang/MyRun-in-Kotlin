@@ -27,6 +27,9 @@ data class HistoryTable (
     @ColumnInfo(name = "distance_column")
     var distance: Double = 0.0,
 
+    @ColumnInfo(name = "unit_column")
+    var distanceUnit: String = "Kilometers",
+
     @ColumnInfo(name = "calorie_column")
     var calorie: Double = 0.0,
 

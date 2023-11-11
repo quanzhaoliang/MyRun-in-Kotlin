@@ -14,6 +14,7 @@ import android.widget.ListView
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.preference.PreferenceManager
 import java.util.ArrayList
 import java.util.Calendar
 
@@ -46,6 +47,7 @@ class ManualInputActivity : AppCompatActivity() {
     private var time: String = ""
     private var duration: Double = 0.0
     private var distance: Double = 0.0
+    private var distanceUnit: String = "Kilometers"
     private var heartRate: Double = 0.0
     private var calorie: Double = 0.0
     private var comment: String = ""
@@ -81,6 +83,17 @@ class ManualInputActivity : AppCompatActivity() {
         viewModelFactory = HistoryViewModel.HistoryViewModelFactory(repository)
         historyViewModel = ViewModelProvider(this, viewModelFactory).get(HistoryViewModel::class.java)
 
+        //Get the unit selected by the user
+        val sharedPref = PreferenceManager.getDefaultSharedPreferences(this)
+        val defaultValue = "-1" // Assign some meaningful default value
+        val unitSelected = sharedPref.getString("unit", defaultValue)
+        if (unitSelected == "metric"){
+            distanceUnit = "Kilometers"
+        }
+        else{
+            distanceUnit = "Miles"
+        }
+
 
         val historyFragment = HistoryFragment()
         //Set the Save & Cancel Buttons
@@ -94,12 +107,13 @@ class ManualInputActivity : AppCompatActivity() {
             history.time = time
             history.duration = duration
             history.distance = distance
+            history.distanceUnit = distanceUnit
             history.calorie = calorie
             history.heartRate = heartRate
             history.comment = comment
             historyViewModel.insert(history)
             val intent = Intent(this, MainActivity::class.java)
-
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             // Optionally, add data to the Intent
             intent.putExtra("key", "value")
 

@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
 import android.widget.Button
 import android.widget.ListView
 import androidx.lifecycle.Observer
@@ -56,6 +57,23 @@ class HistoryFragment : Fragment() {
             arrayAdapter.replace(it)
             arrayAdapter.notifyDataSetChanged()
         })
+
+        myListView.setOnItemClickListener { parent, view, position, id ->
+            val item = arrayAdapter.getItem(position) as HistoryTable
+            println(item)
+            val intent = Intent(requireContext(), EntryDisplayActivity::class.java)
+            intent.putExtra("ID", item.id)
+            intent.putExtra("Activity", item.activity)
+            intent.putExtra("InputType", item.input)
+            intent.putExtra("Date", item.date)
+            intent.putExtra("Time", item.time)
+            intent.putExtra("Duration", item.duration)
+            intent.putExtra("Distance", item.distance)
+            intent.putExtra("Calories", item.calorie)
+            intent.putExtra("HeartRate", item.heartRate)
+            startActivity(intent)
+        }
+
 
         return view
     }

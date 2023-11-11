@@ -1,5 +1,6 @@
 package com.example.quanzhao_liang_myrun2
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -10,6 +11,7 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.Spinner
+import androidx.core.content.ContextCompat
 
 
 class StartFragment : Fragment() {
@@ -46,8 +48,6 @@ class StartFragment : Fragment() {
             val selectedInputType = spinner1.selectedItem.toString()
             val selectedActivityType = spinner2.selectedItem.toString()
 
-            val fragment = HistoryFragment()
-
             when (selectedInputType){
                 "Manual Entry" ->{
                     val intent = Intent(requireContext(), ManualInputActivity::class.java)
@@ -57,6 +57,8 @@ class StartFragment : Fragment() {
                 "GPS", "Automatic" -> {
                     val intent = Intent(requireContext(), MapDisplayActivity::class.java)
                     intent.putExtra("ActivityType", selectedActivityType)
+                    val notifyIntent = Intent(requireContext(), NotifyService::class.java)
+                    requireContext().startService(notifyIntent)
                     startActivity(intent)
                 }
             }

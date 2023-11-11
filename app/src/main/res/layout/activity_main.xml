@@ -17,7 +17,7 @@
         android:background="#4A00BCD4"
         android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-        app:title="MyRuns2"
+        app:title="MyRuns"
         />
 
     <com.google.android.material.tabs.TabLayout

@@ -1,10 +1,16 @@
 package com.example.quanzhao_liang_myrun2
 
+import android.Manifest
+import android.content.pm.PackageManager
 import android.location.GnssAntennaInfo.Listener
+import android.location.LocationManager
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.FrameLayout
 import android.widget.Spinner
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayout
@@ -23,6 +29,8 @@ class MainActivity : AppCompatActivity() {
     private val tabTitles = arrayOf("Start", "History", "Settings")
     private lateinit var tabConfigurationStrategy: TabConfigurationStrategy
     private lateinit var tabLayoutMediator: TabLayoutMediator
+
+    private val PERMISSION_REQUEST_CODE = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,33 +60,5 @@ class MainActivity : AppCompatActivity() {
 
         tabLayoutMediator = TabLayoutMediator(tabLayout, viewPager2, tabConfigurationStrategy)
         tabLayoutMediator.attach()
-
-//        val historyFragment =HistoryFragment()
-//        val onTabSelectedListener = object : TabLayout.OnTabSelectedListener {
-//            override fun onTabSelected(tab: TabLayout.Tab) {
-//                // Tab selected, perform your action here
-//                val position = tab.position
-//                if (position == 1){
-//                    println("OKKKKK")
-//                    supportFragmentManager.beginTransaction()
-//                        .detach(HistoryFragment())
-//                        .attach(HistoryFragment())
-//                        .commit()
-//                }
-//                // Do something with the selected tab
-//            }
-//
-//            override fun onTabUnselected(tab: TabLayout.Tab) {
-//                // Tab unselected
-//            }
-//
-//            override fun onTabReselected(tab: TabLayout.Tab) {
-//                // Tab reselected
-//            }
-//        }
-
-
-//        tabLayout.addOnTabSelectedListener(onTabSelectedListener)
     }
-
 }

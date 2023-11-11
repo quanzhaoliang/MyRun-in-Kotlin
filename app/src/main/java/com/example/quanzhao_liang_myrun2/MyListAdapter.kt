@@ -7,11 +7,12 @@ import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.Button
 import android.widget.TextView
+import androidx.preference.PreferenceManager
 
 class MyListAdapter(private val context: Context, private var historyList: List<HistoryTable>, private var historyViewModel: HistoryViewModel) : BaseAdapter(){
 
     override fun getItem(position: Int): Any {
-        return historyList.get(position)
+        return historyList[position]
     }
 
     override fun getItemId(position: Int): Long {
@@ -36,7 +37,8 @@ class MyListAdapter(private val context: Context, private var historyList: List<
         val textViewHeart = view.findViewById(R.id.tv_heartRate) as TextView
         val textViewComment = view.findViewById(R.id.tv_comment) as TextView
 
-        val deleteButton: Button = view.findViewById(R.id.delete_btn)
+//        val deleteButton: Button = view.findViewById(R.id.delete_btn)
+
 
 
         textViewID.text = "ID: " + historyList.get(position).id.toString()
@@ -46,15 +48,15 @@ class MyListAdapter(private val context: Context, private var historyList: List<
         textViewActivity.text = "Activity: " + historyList.get(position).activity
         textViewDate.text = "Date: " + historyList.get(position).date
         textViewTime.text = "Time: " + historyList.get(position).time
-        textViewDuration.text = "Duration: " + historyList.get(position).duration
-        textViewDistance.text = "Distance: " + historyList.get(position).distance
-        textViewCalorie.text = "Calorie: " + historyList.get(position).calorie
-        textViewHeart.text = "Heart Rate: " + historyList.get(position).heartRate
+        textViewDuration.text = "Duration: " + historyList.get(position).duration + " secs"
+        textViewDistance.text = "Distance: " + historyList.get(position).distance + " " + historyList.get(position).distanceUnit
+        textViewCalorie.text = "Calorie: " + historyList.get(position).calorie + " cals"
+        textViewHeart.text = "Heart Rate: " + historyList.get(position).heartRate + " bpm"
         textViewComment.text = "Comment: " + historyList.get(position).comment
 
-        deleteButton.setOnClickListener(){
-            historyViewModel.delete(historyList.get(position).id)
-        }
+//        deleteButton.setOnClickListener(){
+//            historyViewModel.delete(historyList.get(position).id)
+//        }
         return view
     }
 
