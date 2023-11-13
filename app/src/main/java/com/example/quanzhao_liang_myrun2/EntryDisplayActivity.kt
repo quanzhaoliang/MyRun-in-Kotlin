@@ -1,10 +1,9 @@
 package com.example.quanzhao_liang_myrun2
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
-import android.widget.ListView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 
@@ -19,6 +18,7 @@ class EntryDisplayActivity : AppCompatActivity() {
     private var distance:Double = 0.0
     private var calories:Double = 0.0
     private var heartRate:Double = 0.0
+    private lateinit var distanceUnit:String
 
     private lateinit var database: HistoryDatabase
     private lateinit var databaseDao: DatabaseDao
@@ -48,6 +48,7 @@ class EntryDisplayActivity : AppCompatActivity() {
         distance = intent.getDoubleExtra("Distance", 0.0)
         calories = intent.getDoubleExtra("Calories", 0.0)
         heartRate = intent.getDoubleExtra("HeartRate", 0.0)
+        distanceUnit = intent.getStringExtra("Unit").toString()
 
         val inputTypeEt = findViewById<EditText>(R.id.input_type_edit_text)
         inputTypeEt.setText(inputType)
@@ -63,7 +64,7 @@ class EntryDisplayActivity : AppCompatActivity() {
         durationEt.setText(duration.toString())
 
         val distanceEt = findViewById<EditText>(R.id.duration_edit_text)
-        distanceEt.setText(distance.toString())
+        distanceEt.setText("$distance $distanceUnit")
 
         val caloriesEt = findViewById<EditText>(R.id.calories_edit_text)
         caloriesEt.setText(calories.toString())

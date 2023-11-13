@@ -3,19 +3,15 @@ package com.example.quanzhao_liang_myrun2
 import android.app.AlertDialog
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
-import android.content.Context
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ListView
-import androidx.core.os.bundleOf
-import androidx.fragment.app.Fragment
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.preference.PreferenceManager
-import java.util.ArrayList
 import java.util.Calendar
 
 class ManualInputActivity : AppCompatActivity() {
@@ -33,14 +29,13 @@ class ManualInputActivity : AppCompatActivity() {
     private lateinit var saveBtn: Button
     private lateinit var cancelBtn: Button
 
+    private val history = HistoryTable()
     private lateinit var database: HistoryDatabase
     private lateinit var databaseDao: DatabaseDao
     private lateinit var repository: HistoryRepository
     private lateinit var viewModelFactory: HistoryViewModel.HistoryViewModelFactory
     private lateinit var historyViewModel: HistoryViewModel
 
-
-    private val history = HistoryTable()
     private var input: Int = 1
     private var activity: String = ""
     private var date: String = ""

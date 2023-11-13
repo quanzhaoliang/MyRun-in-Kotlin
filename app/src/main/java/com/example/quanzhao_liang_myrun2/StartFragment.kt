@@ -1,17 +1,14 @@
 package com.example.quanzhao_liang_myrun2
 
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.Spinner
-import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
 
 
 class StartFragment : Fragment() {
@@ -54,9 +51,18 @@ class StartFragment : Fragment() {
                     intent.putExtra("ActivityType", selectedActivityType)
                     startActivity(intent)
                 }
-                "GPS", "Automatic" -> {
+                "GPS" -> {
                     val intent = Intent(requireContext(), MapDisplayActivity::class.java)
                     intent.putExtra("ActivityType", selectedActivityType)
+                    intent.putExtra("InputType", selectedInputType)
+                    val notifyIntent = Intent(requireContext(), NotifyService::class.java)
+                    requireContext().startService(notifyIntent)
+                    startActivity(intent)
+                }
+                "Automatic"->{
+                    val intent = Intent(requireContext(), MapDisplayActivity::class.java)
+                    intent.putExtra("ActivityType", selectedActivityType)
+                    intent.putExtra("InputType", selectedInputType)
                     val notifyIntent = Intent(requireContext(), NotifyService::class.java)
                     requireContext().startService(notifyIntent)
                     startActivity(intent)

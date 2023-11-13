@@ -2,17 +2,13 @@ package com.example.quanzhao_liang_myrun2
 
 import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
-import android.widget.Button
 import android.widget.ListView
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.loader.app.LoaderManager
-import androidx.viewpager2.widget.ViewPager2
 
 class HistoryFragment : Fragment() {
 
@@ -26,7 +22,6 @@ class HistoryFragment : Fragment() {
     private lateinit var repository: HistoryRepository
     private lateinit var viewModelFactory: HistoryViewModel.HistoryViewModelFactory
     private lateinit var historyViewModel: HistoryViewModel
-    private lateinit var history: HistoryTable
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -60,18 +55,35 @@ class HistoryFragment : Fragment() {
 
         myListView.setOnItemClickListener { parent, view, position, id ->
             val item = arrayAdapter.getItem(position) as HistoryTable
-            println(item)
-            val intent = Intent(requireContext(), EntryDisplayActivity::class.java)
-            intent.putExtra("ID", item.id)
-            intent.putExtra("Activity", item.activity)
-            intent.putExtra("InputType", item.input)
-            intent.putExtra("Date", item.date)
-            intent.putExtra("Time", item.time)
-            intent.putExtra("Duration", item.duration)
-            intent.putExtra("Distance", item.distance)
-            intent.putExtra("Calories", item.calorie)
-            intent.putExtra("HeartRate", item.heartRate)
-            startActivity(intent)
+
+            if (item.input == 1){
+                val intent = Intent(requireContext(), EntryDisplayActivity::class.java)
+                intent.putExtra("ID", item.id)
+                intent.putExtra("Activity", item.activity)
+                intent.putExtra("InputType", item.input)
+                intent.putExtra("Date", item.date)
+                intent.putExtra("Time", item.time)
+                intent.putExtra("Duration", item.duration)
+                intent.putExtra("Distance", item.distance)
+                intent.putExtra("Calories", item.calorie)
+                intent.putExtra("Unit", item.distanceUnit)
+                intent.putExtra("HeartRate", item.heartRate)
+                startActivity(intent)
+            }
+            else{
+                val intent = Intent(requireContext(), EntryDisplayActivity::class.java)
+                intent.putExtra("ID", item.id)
+                intent.putExtra("Activity", item.activity)
+                intent.putExtra("InputType", item.input)
+                intent.putExtra("Date", item.date)
+                intent.putExtra("Time", item.time)
+                intent.putExtra("Duration", item.duration)
+                intent.putExtra("Distance", item.distance)
+                intent.putExtra("Calories", item.calorie)
+                intent.putExtra("Unit", item.distanceUnit)
+                intent.putExtra("HeartRate", item.heartRate)
+            }
+
         }
 
 

@@ -3,6 +3,7 @@ package com.example.quanzhao_liang_myrun2
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.google.android.gms.maps.model.LatLng
 
 @Entity(tableName = "history_table")
 data class HistoryTable (
@@ -27,6 +28,12 @@ data class HistoryTable (
     @ColumnInfo(name = "distance_column")
     var distance: Double = 0.0,
 
+    @ColumnInfo(name = "average_speed_column")
+    var avgSpeed: Double = 0.0,
+
+    @ColumnInfo(name = "climb_column")
+    var climb: Double = 0.0,
+
     @ColumnInfo(name = "unit_column")
     var distanceUnit: String = "Kilometers",
 
@@ -37,5 +44,8 @@ data class HistoryTable (
     var heartRate: Double = 0.0,
 
     @ColumnInfo(name = "comment_column")
-    var comment: String = ""
+    var comment: String = "",
+
+    @ColumnInfo(name = "lagLng_column")
+    var location: ArrayList<LatLng>? = null
 )

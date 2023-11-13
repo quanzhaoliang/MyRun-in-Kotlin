@@ -8,23 +8,27 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
-import android.hardware.Sensor
-import android.hardware.SensorEvent
-import android.hardware.SensorEventListener
+import android.location.Location
+import android.location.LocationListener
+import android.location.LocationManager
 import android.os.Build
 import android.os.IBinder
 import androidx.core.app.NotificationCompat
 
-class NotifyService: Service(), SensorEventListener{
+class NotifyService: Service(), LocationListener{
     private val channelId = "notification channel"
     private val PENDINGINTENT_REQUEST_CODE = 0
     private val NOTIFY_ID = 11
     private lateinit var notificationManager: NotificationManager
     private lateinit var myBroadcastReceiver: MyBroadcastReceiver
 
+    private lateinit var locationManager: LocationManager
+
     private val mFeatLen = Globals.ACCELEROMETER_BLOCK_CAPACITY + 2
     companion object{
         val STOP_SERVICE_ACTION = "stop service action"
+        private const val MIN_DISTANCE_CHANGE_FOR_UPDATES: Float = 10f // 10 meters
+        private const val MIN_TIME_BW_UPDATES: Long = 1000 * 60 * 1 // 1 minute
     }
     override fun onCreate() {
         super.onCreate()
@@ -35,6 +39,13 @@ class NotifyService: Service(), SensorEventListener{
         val intentFilter = IntentFilter()
         intentFilter.addAction(STOP_SERVICE_ACTION)
         registerReceiver(myBroadcastReceiver, intentFilter)
+
+    }
+
+
+    override fun onLocationChanged(location: Location) {
+        val speed = location.speed // speed in m/s
+        // Calculate distance moved and update UI or store in database
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
@@ -63,6 +74,8 @@ class NotifyService: Service(), SensorEventListener{
         notificationBuilder.setContentIntent(pendingIntent)
         notificationBuilder.setSmallIcon(R.drawable.baseline_run_circle_24)
         val notification = notificationBuilder.build()
+
+
         if (Build.VERSION.SDK_INT > 26) {
             val notificationChannel = NotificationChannel(channelId, "channel name", NotificationManager.IMPORTANCE_DEFAULT)
             notificationManager.createNotificationChannel(notificationChannel)
@@ -82,12 +95,6 @@ class NotifyService: Service(), SensorEventListener{
         return null
     }
 
-    override fun onSensorChanged(event: SensorEvent?) {
-        TODO("Not yet implemented")
-    }
 
-    override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {
-        TODO("Not yet implemented")
-    }
 
 }

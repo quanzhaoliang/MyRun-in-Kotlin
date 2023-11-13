@@ -1,13 +1,10 @@
 package com.example.quanzhao_liang_myrun2
 
-import android.app.Activity
 import android.content.Context
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
-import android.widget.Button
 import android.widget.TextView
-import androidx.preference.PreferenceManager
 
 class MyListAdapter(private val context: Context, private var historyList: List<HistoryTable>, private var historyViewModel: HistoryViewModel) : BaseAdapter(){
 
@@ -33,9 +30,9 @@ class MyListAdapter(private val context: Context, private var historyList: List<
         val textViewTime = view.findViewById(R.id.tv_time) as TextView
         val textViewDuration = view.findViewById(R.id.tv_duration) as TextView
         val textViewDistance = view.findViewById(R.id.tv_distance) as TextView
-        val textViewCalorie = view.findViewById(R.id.tv_calorie) as TextView
-        val textViewHeart = view.findViewById(R.id.tv_heartRate) as TextView
-        val textViewComment = view.findViewById(R.id.tv_comment) as TextView
+//        val textViewCalorie = view.findViewById(R.id.tv_calorie) as TextView
+//        val textViewHeart = view.findViewById(R.id.tv_heartRate) as TextView
+//        val textViewComment = view.findViewById(R.id.tv_comment) as TextView
 
 //        val deleteButton: Button = view.findViewById(R.id.delete_btn)
 
@@ -45,18 +42,23 @@ class MyListAdapter(private val context: Context, private var historyList: List<
         if (historyList.get(position).input == 1){
             textViewInput.text = "Input Type: " + "Manual Entry"
         }
+        else if (historyList.get(position).input == 2){
+            textViewInput.text = "Input Type: " + "GPS"
+        }
+        else{
+            if (historyList.get(position).input == 1){
+                textViewInput.text = "Input Type: " + "Automatics"
+            }
+        }
         textViewActivity.text = "Activity: " + historyList.get(position).activity
         textViewDate.text = "Date: " + historyList.get(position).date
         textViewTime.text = "Time: " + historyList.get(position).time
         textViewDuration.text = "Duration: " + historyList.get(position).duration + " secs"
         textViewDistance.text = "Distance: " + historyList.get(position).distance + " " + historyList.get(position).distanceUnit
-        textViewCalorie.text = "Calorie: " + historyList.get(position).calorie + " cals"
-        textViewHeart.text = "Heart Rate: " + historyList.get(position).heartRate + " bpm"
-        textViewComment.text = "Comment: " + historyList.get(position).comment
+//        textViewCalorie.text = "Calorie: " + historyList.get(position).calorie + " cals"
+//        textViewHeart.text = "Heart Rate: " + historyList.get(position).heartRate + " bpm"
+//        textViewComment.text = "Comment: " + historyList.get(position).comment
 
-//        deleteButton.setOnClickListener(){
-//            historyViewModel.delete(historyList.get(position).id)
-//        }
         return view
     }
 
