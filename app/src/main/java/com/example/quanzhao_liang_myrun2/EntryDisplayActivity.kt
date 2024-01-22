@@ -41,6 +41,12 @@ class EntryDisplayActivity : AppCompatActivity() {
         if (inputTypeInt == 1){
             inputType = "Manual Entry"
         }
+        else if (inputTypeInt == 2){
+            inputType = "GPS"
+        }
+        else{
+            inputType = "Automatic"
+        }
         activity = intent.getStringExtra("Activity").toString()
         date =intent.getStringExtra("Date").toString()
         time = intent.getStringExtra("Time").toString()

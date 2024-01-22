@@ -64,6 +64,7 @@ class StartFragment : Fragment() {
                     intent.putExtra("ActivityType", selectedActivityType)
                     intent.putExtra("InputType", selectedInputType)
                     val notifyIntent = Intent(requireContext(), NotifyService::class.java)
+                    notifyIntent.putExtra("InputType", selectedInputType)
                     requireContext().startService(notifyIntent)
                     startActivity(intent)
                 }

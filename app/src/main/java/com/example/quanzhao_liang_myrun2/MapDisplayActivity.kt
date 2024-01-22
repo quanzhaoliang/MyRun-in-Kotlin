@@ -14,6 +14,7 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.preference.PreferenceManager
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -67,12 +68,14 @@ class MapDisplayActivity : AppCompatActivity(), OnMapReadyCallback, LocationList
     private var speedReadingsCount: Int = 0
     private var distanceUnit: String = "Kilometers"
     private var totalDistance: Double = 0.0
+    private var convertedDistance = 0.0
 
     private var lastAltitude: Double ?= null
     private var totalClimb: Double = 0.0
     private lateinit var activityType: String
 
     private var calories:Double = 0.0
+    private var duration: Double = 0.0
 
     private val history = HistoryTable()
     private lateinit var database: HistoryDatabase
@@ -80,6 +83,8 @@ class MapDisplayActivity : AppCompatActivity(), OnMapReadyCallback, LocationList
     private lateinit var repository: HistoryRepository
     private lateinit var viewModelFactory: HistoryViewModel.HistoryViewModelFactory
     private lateinit var historyViewModel: HistoryViewModel
+
+    private lateinit var myViewModel: MyViewModel
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -89,6 +94,9 @@ class MapDisplayActivity : AppCompatActivity(), OnMapReadyCallback, LocationList
         val mapFragment = supportFragmentManager.findFragmentById(R.id.map)
                 as SupportMapFragment
         mapFragment.getMapAsync(this)
+
+        val startTime = System.currentTimeMillis() / 1000
+        locationList = ArrayList<LatLng>()
 
         database = HistoryDatabase.getInstance(this)
         databaseDao = database.historyDatabaseDao
@@ -106,7 +114,20 @@ class MapDisplayActivity : AppCompatActivity(), OnMapReadyCallback, LocationList
         caloriesView = findViewById(R.id.map_calories)
 
         activityType = intent.getStringExtra("ActivityType").toString()
+
+
         inputType = intent.getStringExtra("InputType").toString()
+        if (inputType == "Automatic"){
+            SharedRepository.data.observe(this, Observer{
+                data->
+                activityView.text = "Type: $data"
+                activityType = data
+            })
+        }
+        //Add activity type to text view
+        if (inputType == "GPS"){
+            activityView.text = "Type: $activityType"
+        }
         //get current date and time
         val currentDate = LocalDate.now()
         val formatterDate = DateTimeFormatter.ofPattern("yyyy-MM-dd")
@@ -129,8 +150,11 @@ class MapDisplayActivity : AppCompatActivity(), OnMapReadyCallback, LocationList
 
         val intent = Intent()
         intent.action = NotifyService.STOP_SERVICE_ACTION
+
         mapSaveBtn.setOnClickListener{
             sendBroadcast(intent)
+            val endTime = System.currentTimeMillis() /1000
+            duration = (endTime - startTime).toDouble()
             locationManager.removeUpdates(this)
             if (inputType == "GPS"){
                 history.input = 2
@@ -145,6 +169,7 @@ class MapDisplayActivity : AppCompatActivity(), OnMapReadyCallback, LocationList
             history.calorie = calories
             history.avgSpeed = avgSpeed.toDouble()
             history.location = locationList
+            history.duration = duration
             historyViewModel.insert(history)
 
             val intent = Intent(this, MainActivity::class.java)
@@ -199,7 +224,9 @@ class MapDisplayActivity : AppCompatActivity(), OnMapReadyCallback, LocationList
 
     override fun onLocationChanged(location: Location) {
         val latLng = LatLng(location.latitude, location.longitude)
+        //println(latLng)
         locationList.add(latLng)
+        //println(locationList)
         // Add a point to the polyline
         polylineOptions.add(latLng)
         polyline = mMap.addPolyline(polylineOptions)
@@ -220,14 +247,12 @@ class MapDisplayActivity : AppCompatActivity(), OnMapReadyCallback, LocationList
         val formatter = DecimalFormat("#.##")
         formatter.roundingMode = java.math.RoundingMode.HALF_UP
 
-        //Add activity type to text view
-        activityView.text = "Type: $activityType"
+
 
         //Calculate the total distance moved
         lastLocation?.let { lastLocation ->
             val distance = lastLocation.distanceTo(location)
             totalDistance += distance
-            val distanceInMeters = totalDistance
         }
         lastLocation = location
 
@@ -248,13 +273,13 @@ class MapDisplayActivity : AppCompatActivity(), OnMapReadyCallback, LocationList
         //Convert the total distance from meters to kms or miles
         //Add the on changing distance to the text view
         if (distanceUnit == "Kilometers"){
-            totalDistance /= 1000
+            convertedDistance = totalDistance / 1000
         }
         else{
-            totalDistance /= 1609
+            convertedDistance = totalDistance / 1609
         }
 
-        val formattedDis = formatter.format(totalDistance)
+        val formattedDis = formatter.format(convertedDistance)
         distance = formattedDis.toString()
         distanceView.text = "Distance: $distance $distanceUnit"
 
@@ -275,8 +300,9 @@ class MapDisplayActivity : AppCompatActivity(), OnMapReadyCallback, LocationList
 
         //Calculate the calories
         //Add calories burn to the text view
-        calories = caloriesCalculate(totalDistance, activityType, distanceUnit)
+        calories += caloriesCalculate(convertedDistance, activityType, distanceUnit)
         val formattedCalories = formatter.format(calories)
+        calories = formattedCalories.toDouble()
         caloriesView.text = "Calories: $formattedCalories"
 
 
@@ -312,8 +338,8 @@ class MapDisplayActivity : AppCompatActivity(), OnMapReadyCallback, LocationList
             else -> 1.5
         }
         if (distanceUnit == "Miles"){
-            return distance*1.6214 * 55 * calPerKm
+            return distance*1.6214 * 55 * calPerKm / 10
         }
-        return distance * 55 * calPerKm
+        return distance * 55 * calPerKm / 10
     }
 }

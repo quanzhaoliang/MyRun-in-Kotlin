@@ -46,7 +46,7 @@ class MyListAdapter(private val context: Context, private var historyList: List<
             textViewInput.text = "Input Type: " + "GPS"
         }
         else{
-            if (historyList.get(position).input == 1){
+            if (historyList.get(position).input == 3){
                 textViewInput.text = "Input Type: " + "Automatics"
             }
         }
@@ -55,9 +55,7 @@ class MyListAdapter(private val context: Context, private var historyList: List<
         textViewTime.text = "Time: " + historyList.get(position).time
         textViewDuration.text = "Duration: " + historyList.get(position).duration + " secs"
         textViewDistance.text = "Distance: " + historyList.get(position).distance + " " + historyList.get(position).distanceUnit
-//        textViewCalorie.text = "Calorie: " + historyList.get(position).calorie + " cals"
-//        textViewHeart.text = "Heart Rate: " + historyList.get(position).heartRate + " bpm"
-//        textViewComment.text = "Comment: " + historyList.get(position).comment
+
 
         return view
     }

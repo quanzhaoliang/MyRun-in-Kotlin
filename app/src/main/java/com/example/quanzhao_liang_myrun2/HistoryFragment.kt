@@ -12,6 +12,8 @@ import androidx.lifecycle.ViewModelProvider
 
 class HistoryFragment : Fragment() {
 
+    private var mapCentered = false
+
     private lateinit var myListView: ListView
 
     private lateinit var arrayList: ArrayList<HistoryTable>
@@ -58,6 +60,7 @@ class HistoryFragment : Fragment() {
 
             if (item.input == 1){
                 val intent = Intent(requireContext(), EntryDisplayActivity::class.java)
+                intent.putExtra("Position", position)
                 intent.putExtra("ID", item.id)
                 intent.putExtra("Activity", item.activity)
                 intent.putExtra("InputType", item.input)
@@ -71,22 +74,19 @@ class HistoryFragment : Fragment() {
                 startActivity(intent)
             }
             else{
-                val intent = Intent(requireContext(), EntryDisplayActivity::class.java)
+                val intent = Intent(requireContext(), MapHistoryActivity::class.java)
                 intent.putExtra("ID", item.id)
                 intent.putExtra("Activity", item.activity)
-                intent.putExtra("InputType", item.input)
-                intent.putExtra("Date", item.date)
-                intent.putExtra("Time", item.time)
                 intent.putExtra("Duration", item.duration)
                 intent.putExtra("Distance", item.distance)
+                intent.putExtra("AvgSpeed", item.avgSpeed)
+                intent.putExtra("Climb", item.climb)
                 intent.putExtra("Calories", item.calorie)
                 intent.putExtra("Unit", item.distanceUnit)
-                intent.putExtra("HeartRate", item.heartRate)
+                intent.putParcelableArrayListExtra("Location", item.location)
+                startActivity(intent)
             }
-
         }
-
-
         return view
     }
 }

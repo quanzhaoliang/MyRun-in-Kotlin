@@ -8,7 +8,6 @@ import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface DatabaseDao {
-
     @Insert
     suspend fun insertHistory(historyTable: HistoryTable)
 
@@ -20,4 +19,5 @@ interface DatabaseDao {
 
     @Query("DELETE FROM history_table WHERE id = :key") //":" indicates that it is a Bind variable
     suspend fun deleteHistory(key: Long)
+
 }

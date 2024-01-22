@@ -123,4 +123,7 @@
         "when a user tries to pick up one of cards.\n\n"
     </string>
     <string name="action_settings">Settings</string>
+    <string name="ui_sensor_service_notification_ticker">Collector started recording.</string>
+    <string name="ui_sensor_service_notification_title">MyRuns Collector</string>
+    <string name="ui_sensor_service_notification_content">Recording your activity data now</string>
 </resources>

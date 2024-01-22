@@ -6,7 +6,7 @@ import androidx.room.PrimaryKey
 import com.google.android.gms.maps.model.LatLng
 
 @Entity(tableName = "history_table")
-data class HistoryTable (
+data class HistoryTable(
     @PrimaryKey(autoGenerate = true)
     var id: Long = 0L,
 

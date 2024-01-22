@@ -1,11 +1,10 @@
 package com.example.quanzhao_liang_myrun2
 
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.asLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.*
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.asLiveData
 import java.io.Serializable
-import java.lang.IllegalArgumentException
 
 class HistoryViewModel(private val repository: HistoryRepository): ViewModel(), Serializable{
 
@@ -15,12 +14,12 @@ class HistoryViewModel(private val repository: HistoryRepository): ViewModel(), 
         repository.insert(historyTable)
     }
 
+
     fun delete(id: Long){
         val historyList = allHistoryLiveData.value
         if (!historyList.isNullOrEmpty()){
             repository.delete(id)
         }
-
     }
 
     fun deleteAll(){

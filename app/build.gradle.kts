@@ -3,7 +3,7 @@ plugins {
     id("org.jetbrains.kotlin.android")
     id("kotlin-kapt")
     id("com.google.android.libraries.mapsplatform.secrets-gradle-plugin")
-}
+}2
 
 android {
     namespace = "com.example.quanzhao_liang_myrun2"
@@ -60,7 +60,7 @@ dependencies {
     kapt("androidx.room:room-compiler:$room_version")
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version")
     implementation ("androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_version")
-
+    implementation("com.google.code.gson:gson:2.8.6")
     //Google Map Service
     implementation("com.google.android.gms:play-services-maps:18.2.0")
 

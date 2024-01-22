@@ -1,16 +1,11 @@
 package com.example.quanzhao_liang_myrun2
 
-import android.Manifest
-import android.content.pm.PackageManager
-import android.location.GnssAntennaInfo.Listener
-import android.location.LocationManager
-import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
+import android.content.Intent
 import android.os.Bundle
-import android.widget.FrameLayout
-import android.widget.Spinner
-import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
+import android.provider.Settings
+import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.NotificationManagerCompat
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayout
@@ -58,7 +53,43 @@ class MainActivity : AppCompatActivity() {
         }
 
 
+        checkNotificationEnabled()
+
         tabLayoutMediator = TabLayoutMediator(tabLayout, viewPager2, tabConfigurationStrategy)
         tabLayoutMediator.attach()
+    }
+
+    private fun checkNotificationEnabled() {
+        if (!NotificationManagerCompat.from(this).areNotificationsEnabled()) {
+            // Notifications are not enabled
+            showNotificationEnableDialog()
+        }
+    }
+
+    private fun showNotificationEnableDialog() {
+        // Show an explanation dialog, and upon user agreement, proceed to settings
+        AlertDialog.Builder(this)
+            .setTitle("Enable Notifications")
+            .setMessage("To stay updated, please enable notifications for our app.")
+            .setPositiveButton("Enable") { _, _ ->
+                redirectToSettings()
+            }
+            .setNegativeButton("Cancel"){
+                _,_-> finish()
+            }
+            .show()
+    }
+
+    private fun redirectToSettings() {
+        val intent = Intent().apply {
+            action = Settings.ACTION_APP_NOTIFICATION_SETTINGS
+            putExtra(Settings.EXTRA_APP_PACKAGE, packageName)
+        }
+        startActivity(intent)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        checkNotificationEnabled()
     }
 }
