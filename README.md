@@ -14,3 +14,12 @@ Here're some of the project's best features:
 *   Tracking services and visualize GPS data using Google Maps.
 *   Store GPS traces in the database and enable historical view of these traces within the app.
 *   Integrate the classifier into the app enabling it to recognize and record different physical activities.
+
+
+<h2>🛠️ Installation Steps:</h2>
+
+<p>1. Clone the repo to local</p>
+
+<p>2. Open with Android Studio</p>
+
+<p>3. Run with an virtual or physical device with Google API 31 or higher</p>
