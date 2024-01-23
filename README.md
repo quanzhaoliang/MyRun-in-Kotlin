@@ -4,11 +4,11 @@
 
 <p id="description">A comprehensive application designed to capture and display physical activities using an Android device.</p>
 
-<a href="https://ibb.co/dr68F9M"><img src="https://i.ibb.co/pxZYcDw/2061705967021-pic.jpg" alt="2061705967021-pic" border="0" width="100px"></a>
-<a href="https://ibb.co/qxRtFhc"><img src="https://i.ibb.co/kMhR6zw/2071705967023-pic.jpg" alt="2071705967023-pic" border="0" width="100px"></a>
-<a href="https://ibb.co/JcQZjpZ"><img src="https://i.ibb.co/Cw2LK9L/2081705967025-pic.jpg" alt="2081705967025-pic" border="0" width="100px"></a>
+<a href="https://ibb.co/dr68F9M"><img src="https://i.ibb.co/pxZYcDw/2061705967021-pic.jpg" alt="2061705967021-pic" border="0" width="150px"></a>
+<a href="https://ibb.co/qxRtFhc"><img src="https://i.ibb.co/kMhR6zw/2071705967023-pic.jpg" alt="2071705967023-pic" border="0" width="150px"></a>
+<a href="https://ibb.co/JcQZjpZ"><img src="https://i.ibb.co/Cw2LK9L/2081705967025-pic.jpg" alt="2081705967025-pic" border="0" width="150px"></a>
   
-<h2>Features</h2>
+<h2>✅Features</h2>
 
 Here're some of the project's best features:
 
