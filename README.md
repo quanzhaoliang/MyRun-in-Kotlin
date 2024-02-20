@@ -24,4 +24,4 @@ Here're some of the project's best features:
 
 <p>2. Open with Android Studio</p>
 
-<p>3. Run with a virtual or physical device with Google API 31 or higher</p>
+<p>3. Run with a virtual or physical device with API 31 or higher</p>
